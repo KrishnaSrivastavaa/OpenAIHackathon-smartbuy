@@ -1,0 +1,8 @@
+import { Star } from 'lucide-react';
+import type { Recommendation } from '../types/commerce';
+import { formatPrice } from '../lib/utils';
+import { Card } from './ui/Card';
+export function ProductCard({ recommendation }: { recommendation: Recommendation }) {
+  const { product } = recommendation;
+  return <Card className="overflow-hidden p-0"><img src={product.image} alt={product.title} className="h-48 w-full object-cover"/><div className="p-5"><div className="flex items-start justify-between gap-3"><div><p className="text-sm font-medium text-indigo-600">{product.brand}</p><h3 className="text-xl font-bold text-slate-950">{product.title}</h3></div><span className="flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-sm font-bold text-amber-700"><Star size={15} fill="currentColor"/> {product.rating}</span></div><p className="mt-3 text-2xl font-black text-slate-900">{formatPrice(product.price)}</p><p className="mt-3 text-slate-600">{recommendation.explanation}</p><div className="mt-4 grid grid-cols-2 gap-2 text-sm">{Object.entries(product.specs).slice(0,4).map(([k,v]) => <div className="rounded-xl bg-slate-50 p-2" key={k}><b>{k}</b><br/>{v}</div>)}</div><div className="mt-4 grid gap-3 md:grid-cols-2"><div><b className="text-emerald-700">Pros</b><ul className="list-disc pl-5 text-sm text-slate-600">{recommendation.pros.map(p => <li key={p}>{p}</li>)}</ul></div><div><b className="text-rose-700">Cons</b><ul className="list-disc pl-5 text-sm text-slate-600">{recommendation.cons.length ? recommendation.cons.map(c => <li key={c}>{c}</li>) : <li>No major concern found</li>}</ul></div></div></div></Card>;
+}
